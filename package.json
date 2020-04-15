@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "forever build/app.js",
+    "start": "forever build/server.js",
     "dev": "nodemon src/server.js --exec babel-node",
     "build": "babel -d ./build ./src"
   },
@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/sachin-55/your-insights#readme",
   "dependencies": {
+    "@babel/polyfill": "^7.8.7",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "cloudinary": "^1.21.0",
