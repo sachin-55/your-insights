@@ -30,6 +30,11 @@ app.use(
 );
 app.use(cookieParser());
 
+app.get('/', (req, res) => {
+  res.send(
+    'Hi! Welcome to Yours-Insights <br> Share yours views, ideas, knowledge, experience'
+  );
+});
 //Routes
 app.use('/api/users', userRouter);
 app.use('/api/blogs', blogRouter);
