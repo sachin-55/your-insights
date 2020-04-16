@@ -33,7 +33,7 @@ const router = express.Router();
 router
   .route('/')
   .get(authController.protect, blogController.getAllBlogs)
-  .get(authController.protect, blogController.getAllBlogsForAll)
+  .get(blogController.getAllBlogsForAll)
   .post(authController.protect, blogController.createBlog);
 
 router
