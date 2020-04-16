@@ -74,7 +74,11 @@ exports.createBlog = catchAsync(async (req, res, next) => {
 });
 
 exports.getAllBlogs = catchAsync(async (req, res, next) => {
-  const blogs = await Blog.find().populate('user').select('+createdAt');
+  let query = Blog.find({ user: req.user._id })
+    .populate('user')
+    .select('+createdAt');
+
+  const blogs = await query.sort('-createdAt');
 
   res.status(200).json({
     status: 'success',
