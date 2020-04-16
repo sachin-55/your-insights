@@ -87,6 +87,18 @@ exports.getAllBlogs = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.getAllBlogsForAll = catchAsync(async (req, res, next) => {
+  let query = Blog.find().populate('user').select('+createdAt');
+
+  const blogs = await query.sort('-createdAt');
+
+  res.status(200).json({
+    status: 'success',
+    results: blogs.length,
+    blogs,
+  });
+});
+
 exports.getBlog = catchAsync(async (req, res, next) => {
   const blog = await Blog.findById(req.params.blogId)
     .populate('user')
