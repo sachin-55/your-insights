@@ -39,7 +39,7 @@ router
 
 router
   .route('/:blogId')
-  .get(authController.protect, blogController.getBlog)
+  .get(blogController.getBlog)
   .patch(authController.protect, blogController.updateBlog)
   .delete(authController.protect, blogController.deleteBlog);
 
