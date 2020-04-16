@@ -30,10 +30,11 @@ const upload = multer({
 
 const router = express.Router();
 
+router.get('/public', blogController.getAllBlogsForAll);
+
 router
   .route('/')
   .get(authController.protect, blogController.getAllBlogs)
-  .get(blogController.getAllBlogsForAll)
   .post(authController.protect, blogController.createBlog);
 
 router
