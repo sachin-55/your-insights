@@ -20,12 +20,14 @@ router.patch(
   authController.protect,
   userController.updatePicture
 );
+router.patch(
+  'updateMyNameAndEmail',
+  authController.protect,
+  userController.updateUser
+);
 
 router.route('/').get(userController.getAllUsers);
 
-router
-  .route('/:userId')
-  .get(authController.protect, userController.getUser)
-  .patch(authController.protect, userController.updateUser);
+router.route('/:userId').get(authController.protect, userController.getUser);
 
 export default router;
