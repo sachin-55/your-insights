@@ -16,6 +16,8 @@ const userSchema = new mongoose.Schema({
   },
   photo: {
     type: String,
+    default:
+      'https://res.cloudinary.com/nihcas/image/upload/v1586880191/cvejl4wcdfytjpjzzn2o.jpg',
   },
   coverImage: {
     type: String,

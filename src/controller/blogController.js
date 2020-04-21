@@ -10,7 +10,10 @@ exports.uploadImage = catchAsync(async (req, res, next) => {
     api_secret: process.env.CLOUDINARY_API_SECRET,
   });
 
-  const result = await cloudinary.v2.uploader.upload(req.file.path);
+  const result = await cloudinary.v2.uploader.upload(req.file.path, {
+    resource_type: 'image',
+    folder: req.user.email,
+  });
   // const result = {
   //   secure_url: `https://res.cloudinary.com/nihcas/image/upload/v1586781742/olh4cooqsh7xoieordz4.jpg`,
   // };

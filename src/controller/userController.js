@@ -1,6 +1,7 @@
 import User from '../model/userModel';
 import catchAsync from '../utils/catchAsync';
 import AppError from '../utils/appError';
+import cloudinary from 'cloudinary';
 
 exports.getAllUsers = async (req, res) => {
   try {
@@ -66,4 +67,26 @@ exports.updateUser = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.updatePicture = catchAsync(async (req, res, next) => {});
+exports.uploadProfileImage = catchAsync(async (req, res, next) => {
+  cloudinary.v2.config({
+    cloud_name: process.env.CLOUDINARY_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+  });
+  console.log(`image = ${req.file.path}`);
+
+  const result = await cloudinary.v2.uploader.upload(req.file.path, {
+    resource_type: 'image',
+    folder: 'profile',
+    width: 1200,
+    height: 1200,
+    crop: 'fill',
+    gravity: 'center',
+  });
+
+  res.status(200).json({
+    status: 'success',
+    message: 'profile image uploaded in cloud',
+    result,
+  });
+});
