@@ -84,9 +84,19 @@ exports.uploadProfileImage = catchAsync(async (req, res, next) => {
     gravity: 'center',
   });
 
+  const user = await User.findByIdAndUpdate(
+    req.user.id,
+    { photo: result.secure_url },
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
+
   res.status(200).json({
     status: 'success',
     message: 'profile image uploaded in cloud',
     result,
+    user,
   });
 });
