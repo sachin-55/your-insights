@@ -73,7 +73,9 @@ exports.uploadProfileImage = catchAsync(async (req, res, next) => {
     api_key: process.env.CLOUDINARY_API_KEY,
     api_secret: process.env.CLOUDINARY_API_SECRET,
   });
-  console.log(`image = ${req.file.path}`);
+  if (req.file === undefined) {
+    return next(new AppError('Image not selected. Select an Image', 400));
+  }
 
   const result = await cloudinary.v2.uploader.upload(req.file.path, {
     resource_type: 'image',
