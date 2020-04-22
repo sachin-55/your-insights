@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema({
   photo: {
     type: String,
     default:
-      'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png',
+      'https://res.cloudinary.com/nihcas/image/upload/v1587544195/blank-profile-picture-973460_960_720_qkds5q.png',
   },
   coverImage: {
     type: String,
