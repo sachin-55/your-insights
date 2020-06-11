@@ -8,6 +8,7 @@ import globalErrorHandler from './controller/errorController';
 
 import userRouter from './routes/userRoutes';
 import blogRouter from './routes/blogRoutes';
+import commentRouter from './routes/commentRoutes';
 
 const app = express();
 
@@ -38,6 +39,7 @@ app.get('/', (req, res) => {
 //Routes
 app.use('/api/users', userRouter);
 app.use('/api/blogs', blogRouter);
+app.use('/api/comments', commentRouter);
 
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!!`, 404));
