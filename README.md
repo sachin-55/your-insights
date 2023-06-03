@@ -1,2 +1,2 @@
-# Your-Insights
+# Yours-Insights
 ### Share Your Views With Others
