@@ -1,50 +1,27 @@
-import express from 'express';
-import morgan from 'morgan';
-import cors from 'cors';
-import bodyParser from 'body-parser';
-import cookieParser from 'cookie-parser';
-import AppError from './utils/appError';
-import globalErrorHandler from './controller/errorController';
+import '@babel/polyfill';
 
-import userRouter from './routes/userRoutes';
-import blogRouter from './routes/blogRoutes';
-import commentRouter from './routes/commentRoutes';
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
 
-const app = express();
+dotenv.config({ path: `${__dirname}/../config.env` });
 
-//Global Middlewares
-app.use(
-  cors({
-    credentials: true,
+import app from '.';
+
+const DB = process.env.DATABASE_URL.replace(
+  '<PASSWORD>',
+  process.env.DATABASE_PASSWORD
+).replace('<DATABASE_NAME>', process.env.DATABASE_NAME);
+
+mongoose
+  .connect(DB, {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useFindAndModify: false,
+    useUnifiedTopology: true,
   })
-);
-app.options('*', cors());
+  .then(() => console.log('DB Connection Successful 👍 💯 '));
 
-// if (process.env.NODE_ENV === 'development') {
-app.use(morgan('dev'));
-// }
-
-//body parser
-app.use(bodyParser.json({ limit: '10kb' }));
-app.use(
-  bodyParser.urlencoded({ inflate: true, extended: true, limit: '10kb' })
-);
-app.use(cookieParser());
-
-app.get('/', (req, res) => {
-  res.send(
-    'Hi! Welcome to Yours-Insights <br> Share yours views, ideas, knowledge, experience'
-  );
+const PORT = process.env.PORT;
+const server = app.listen(PORT, () => {
+  console.log(`Server running on PORT ${PORT}`);
 });
-//Routes
-app.use('/api/users', userRouter);
-app.use('/api/blogs', blogRouter);
-app.use('/api/comments', commentRouter);
-
-app.all('*', (req, res, next) => {
-  next(new AppError(`Can't find ${req.originalUrl} on this server!!`, 404));
-});
-
-app.use(globalErrorHandler);
-
-module.exports = app;
