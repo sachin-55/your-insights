@@ -2,10 +2,11 @@
   "name": "your-insights",
   "version": "1.0.0",
   "description": "share your views",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "forever build/index.js",
+    "start:old": "forever build/index.js",
+    "start": "node index.js",
     "dev": "nodemon src/index.js --exec babel-node",
     "build": "babel -d ./build ./src"
   },
