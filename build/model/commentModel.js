@@ -6,25 +6,24 @@ Object.defineProperty(exports, "__esModule", {
 exports["default"] = void 0;
 var _mongoose = _interopRequireDefault(require("mongoose"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-var blogSchema = new _mongoose["default"].Schema({
-  title: {
+var commentSchema = new _mongoose["default"].Schema({
+  comment: {
     type: String,
-    required: [true, 'Blog must have a title.']
+    required: true
   },
-  content: {
-    type: String,
-    required: [true, 'There is no Blog 😉']
-  },
-  createdAt: {
+  commentDate: {
     type: Date,
-    "default": Date.now(),
-    select: false
+    "default": Date.now()
   },
-  user: {
+  commentedBlog: {
+    type: _mongoose["default"].Schema.Types.ObjectId,
+    ref: 'Blog'
+  },
+  commentedBy: {
     type: _mongoose["default"].Schema.Types.ObjectId,
     ref: 'User'
   }
 });
-var Blog = _mongoose["default"].model('Blog', blogSchema);
-var _default = Blog;
+var Comment = _mongoose["default"].model('Comment', commentSchema);
+var _default = Comment;
 exports["default"] = _default;

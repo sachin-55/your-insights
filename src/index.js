@@ -5,13 +5,12 @@ import dotenv from 'dotenv';
 
 dotenv.config({ path: `${__dirname}/../config.env` });
 
-import app from '.';
+import app from './app';
 
 const DB = process.env.DATABASE_URL.replace(
   '<PASSWORD>',
   process.env.DATABASE_PASSWORD
 ).replace('<DATABASE_NAME>', process.env.DATABASE_NAME);
-
 mongoose
   .connect(DB, {
     useNewUrlParser: true,
@@ -19,7 +18,9 @@ mongoose
     useFindAndModify: false,
     useUnifiedTopology: true,
   })
-  .then(() => console.log('DB Connection Successful 👍 💯 '));
+  .then(() => console.log('DB Connection Successful 👍 💯 ')).catch((err)=>{
+    console.log({err});
+  });
 
 const PORT = process.env.PORT;
 const server = app.listen(PORT, () => {
